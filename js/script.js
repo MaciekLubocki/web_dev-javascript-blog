@@ -19,17 +19,35 @@ const titleClickHandler = function(event) {
     console.log('Link was clicked!');
     console.log(event);
 
-    /* remove class 'active' from all article links  */
+    /* [done] remove class 'active' from all article links  */
 
-    /* add class 'active' to the clicked link */
+    const activeLinks = document.querySelectorAll('.titles a');
+    for (let activeLink of activeLinks) {
+        activeLink.classList.remove('active');
 
-    /* remove class 'active' from all articles */
+    }
 
-    /* get 'href' attribute from the clicked link */
+    /* [done] add class 'active' to the clicked link */
+    const clickedElement = this;
+    // console.log('clickedElement:', clickedElement);
+    clickedElement.classList.add('active');
 
-    /* find the correct article using the selector (value of 'href' attribute) */
+    /* [done] remove class 'active' from all articles */
+    const activeArticles = document.querySelectorAll('.post');
+    for (let activeArticle of activeArticles) {
+        activeArticle.classList.remove('active');
+    }
 
-    /* add class 'active' to the correct article */
+
+    /* [in progress] get 'href' attribute from the clicked link */
+
+    /* [in progress] find the correct article using the selector (value of 'href' attribute) */
+
+    /* [in progress] add class 'active' to the correct article */
+
+
+
+
 }
 
 const links = document.querySelectorAll('.titles a');
