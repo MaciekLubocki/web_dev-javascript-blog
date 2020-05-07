@@ -16,6 +16,7 @@
 
 
 const titleClickHandler = function(event) {
+    event.preventDefault();
     console.log('Link was clicked!');
     console.log(event);
 
@@ -39,15 +40,18 @@ const titleClickHandler = function(event) {
     }
 
 
-    /* [in progress] get 'href' attribute from the clicked link */
+    /* [done] get 'href' attribute from the clicked link */
+    const articleSelector = clickedElement;
+
+    articleSelector.getAttribute('href');
+    console.log(articleSelector);
+    console.log('to jest article selector href', articleSelector.getAttribute('href'));
+
 
     /* [in progress] find the correct article using the selector (value of 'href' attribute) */
 
-    /* [in progress] add class 'active' to the correct article */
-
-
-
-
+    let targetArticle = document.querySelector(articleSelector);
+    console.log('to jest targetArticle: ', targetArticle);
 }
 
 const links = document.querySelectorAll('.titles a');
