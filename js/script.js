@@ -1,4 +1,9 @@
-'use strict'; {
+'use strict';
+
+{
+    const optArticleSelector = '.post',
+        optTitleSelector = '.post-title',
+        optTitleListSelector = '.titles';
     const titleClickHandler = function(event) {
         event.preventDefault();
         console.log('Link was clicked!');
@@ -12,12 +17,10 @@
             activeLink.classList.remove('active');
         }
 
-
         /* [done] add class 'active' to the clicked link */
 
         const clickedElement = this;
         clickedElement.classList.add('active');
-
 
         /* [done] remove class 'active' from all articles */
 
@@ -25,7 +28,6 @@
         for (let activeArticle of activeArticles) {
             activeArticle.classList.remove('active');
         }
-
 
         /* [done] get 'href' attribute from the clicked link */
 
@@ -45,17 +47,6 @@
         targetArticle.classList.add('active');
     }
 
-
-
-
-
-    const optArticleSelector = '.post',
-        optTitleSelector = '.post-title',
-        optTitleListSelector = '.titles',
-
-        /* [done] remove contents of titleList */
-        opttitleList = document.querySelector(optTitleListSelector).innerHTML = '';
-
     function generateTitleLinks() {
 
         /* [done] for each article do: */
@@ -65,7 +56,9 @@
 
         let html = '';
 
+        /* [done] remove contents of titleList */
         const titleListEnter = document.querySelector(optTitleListSelector);
+        document.querySelector(optTitleListSelector).innerHTML = '';
 
         for (let article of articles) {
             console.log(' Article ELement is: ', article);
