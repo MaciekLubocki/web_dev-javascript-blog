@@ -4,7 +4,7 @@
 const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
-    optArticleTagsSelector = '.post-tags .list';
+    optArticleTagsSelector = '.list-horizontal';
 
 
 
@@ -65,7 +65,7 @@ function generateTitleLinks() {
     document.querySelector(optTitleListSelector).innerHTML = '';
 
     for (let article of articles) {
-        console.log(' Article ELement is: ', article);
+        console.log('Article ELement is: ', article);
 
         /* get the article id */
 
@@ -115,12 +115,20 @@ function generateTags() {
 
     /* START LOOP: for every article: */
 
+
+
+
     for (let article of articles2) {
         console.log(' Article TAG ELement is: ', article);
 
         /* find tags wrapper */
         /* make html variable with empty string */
         let html = '';
+
+        const titleListEnterX = optArticleTagsSelector;
+        document.querySelector(optArticleTagsSelector).innerHTML = '';
+
+
 
         /* get tags from data-tags attribute */
         const articleTag = article.getAttribute('data-tags');
@@ -131,6 +139,8 @@ function generateTags() {
 
         /* for each tag */
         /* START LOOP: for each tag */
+
+
         for (let tag of articleTagsArray) {
             console.log('TO JEST TAG', tag);
 
@@ -147,8 +157,8 @@ function generateTags() {
             console.log('to jest html: ', html);
             //DOTĄD JEST DOBRZE
 
-            let titleListEnterX = article;
-            console.log('to jest article do TAG: ', optArticleTagsSelector);
+
+            console.log('to jest article do TAG: ', titleListEnterX);
             titleListEnterX.innerHTML = html;
             console.log('tutaj mam titlelistenxterX', titleListEnterX)
 
@@ -157,15 +167,17 @@ function generateTags() {
 
         /* END LOOP: for every article: */
 
+        const links = document.querySelectorAll(optArticleTagsSelector);
 
-        for (let article of articles2) {
-            console.log(' Article TAG ELement is: ', article);
+        for (let link of links) {
             article.addEventListener('click', titleClickHandler);
 
 
 
 
-
+            // for (let article of articles2) {
+            //     console.log(' Article TAG ELement is: ', article);
+            //     article.addEventListener('click', titleClickHandler);
 
 
             // const links = document.querySelectorAll('.list-horizontal');
