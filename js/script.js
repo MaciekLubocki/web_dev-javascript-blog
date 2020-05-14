@@ -143,10 +143,12 @@ function generateTags() {
             /* insert HTML of all the links into the tags wrapper */
             // titleListEnter.insertAdjacentHTML("afterend", linkHTML);
             html = html + linkTag;
+
             console.log('to jest html: ', html);
+            //DOTĄD JEST DOBRZE
 
-
-            let titleListEnterX = document.querySelector('.list-horizontal');
+            let titleListEnterX = article;
+            console.log('to jest article do TAG: ', optArticleTagsSelector);
             titleListEnterX.innerHTML = html;
             console.log('tutaj mam titlelistenxterX', titleListEnterX)
 
@@ -154,11 +156,25 @@ function generateTags() {
         }
 
         /* END LOOP: for every article: */
-        const links = document.querySelectorAll('.list-horizontal');
-        console.log('to jest links', links);
-        for (let link of links) {
-            console.log('to jest link', link);
-            link.addEventListener('click', titleClickHandler);
+
+
+        for (let article of articles2) {
+            console.log(' Article TAG ELement is: ', article);
+            article.addEventListener('click', titleClickHandler);
+
+
+
+
+
+
+
+            // const links = document.querySelectorAll('.list-horizontal');
+            // console.log('to jest links', links);
+            // for (let link of links) {
+            //     console.log('to jest link', link);
+
+            //     link.addEventListener('click', titleClickHandler);
+
         }
     }
 
