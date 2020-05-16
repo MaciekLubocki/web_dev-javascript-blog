@@ -146,6 +146,14 @@ list a:active {
 
 .post-author {
   font-style: italic;
+  text-decoration: none;
+  list-style: none;
+}
+
+.post-author a {
+  text-decoration: none;
+  list-style: none;
+  color: #444;
 }
 
 .post-tags {
