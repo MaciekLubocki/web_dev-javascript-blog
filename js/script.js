@@ -5,7 +5,10 @@
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list',
-    optArticleAuthorsSelector = '.post-author';
+    optArticleAuthorsSelector = '.post-author',
+    optTagsListSelector = '.tags.list',
+    optCloudClassCount = 5,
+    optCloudClassPrefix = "tag-size-";
 
 
   const titleClickHandler = function (event) {
@@ -88,59 +91,120 @@
 
   generateTitleLinks();
 
-  function generateTags() {
-  /* find all articles */
+  function calculateTagsParams(tags) {
+    function calculateTagClass(count, params) {
+      function generateTags() {
+        /* [NEW] create a new variable allTags with an empty array */
+        let allTags = {};
 
-    const articles = document.querySelectorAll(optArticleSelector);
-    console.log('All Articles TAG: ', articles);
+        /* find all articles */
+        const articles = document.querySelectorAll(optArticleSelector);
+        console.log('All Articles TAG: ', articles);
 
-    /* START LOOP: for every article: */
-    for (let article of articles) {
-      console.log(' Article TAG ELement is: ', article);
+        /* START LOOP: for every article: */
+        for (let article of articles) {
+          console.log(' Article TAG ELement is: ', article);
 
-      /* find tags wrapper */
-      /* make html variable with empty string */
+          /* find tags wrapper */
+          /* make html variable with empty string */
 
-      const titleListEnterX = article.querySelector(optArticleTagsSelector);
-      titleListEnterX.innerHTML = '';
-      let html = '';
+          const titleListEnterX = article.querySelector(optArticleTagsSelector);
+          titleListEnterX.innerHTML = '';
+          let html = '';
 
-      // optArticleTagsSelector
-      /* get tags from data-tags attribute */
-      const articleTag = article.getAttribute('data-tags');
-      console.log('to jest article TAG selector data-tags', articleTag);
+          // optArticleTagsSelector
+          /* get tags from data-tags attribute */
+          const articleTag = article.getAttribute('data-tags');
+          console.log('to jest article TAG selector data-tags', articleTag);
 
-      /* split tags into array */
-      const articleTagsArray = articleTag.split(' ');
+          /* split tags into array */
+          const articleTagsArray = articleTag.split(' ');
 
-      /* for each tag */
-      /* START LOOP: for each tag */
-      for (let tag of articleTagsArray) {
-        console.log('TO JEST TAG', tag);
+          /* for each tag */
+          /* START LOOP: for each tag */
+          for (let tag of articleTagsArray) {
+            console.log('TO JEST TAG', tag);
 
-        /* create HTML of the link */
-        /* add generated code to html variable */
-        const linkTag = '<li><a href="#tag-' +  tag + '">' + tag + '</a></li>';
-        console.log('to jest linkTag: ', linkTag);
-        console.log('to jest tag: ', tag);
+            /* create HTML of the link */
+            /* add generated code to html variable */
+            const linkTag = '<li><a href="#tag-' +  tag + '">' + tag + '</a></li>';
+            console.log('to jest linkTag: ', linkTag);
+            console.log('to jest tag: ', tag);
 
-        /* insert HTML of all the links into the tags wrapper */
-        // titleListEnter.insertAdjacentHTML("afterend", linkHTML);
-        html = html + linkTag;
+            /* [NEW] check if this link is NOT already in allTags */
+            if(!allTags[tag]) {
+              /* [NEW] add tag to allTags object */
+              allTags[tag] = 1;
+            } else {
+              allTags[tag]++;
+            }
 
-        console.log('to jest html: ', html);
+            /* insert HTML of all the links into the tags wrapper */
+            // titleListEnter.insertAdjacentHTML("afterend", linkHTML);
+            html = html + linkTag;
 
-        console.log('to jest article do TAG: ', titleListEnterX);
-        titleListEnterX.innerHTML = html;
-        console.log('tutaj mam titlelistenxterX', titleListEnterX);
+            console.log('to jest html: ', html);
+
+            console.log('to jest article do TAG: ', titleListEnterX);
+            titleListEnterX.innerHTML = html;
+            console.log('tutaj mam titlelistenxterX', titleListEnterX);
+          }
+          /* END LOOP: for every article: */
+
+
+          /* [NEW] find list of tags in right column */
+          const tagList = document.querySelector('.tags');
+          /* [NEW] create variable for all links HTML code */
+          const tagsParams = calculateTagsParams(allTags);
+          console.log('tagsParams:', tagsParams);
+          let allTagsHTML = '';
+
+          /* [NEW] START LOOP: for each tag in allTags: */
+          for(let tag in allTags){
+            /* [NEW] generate code of a link and add it to allTagsHTML */
+        
+            allTagsHTML += tagLinkHTML;
+        
+            const tagLinkHTML = '<li>' + calculateTagClass(allTags[tag], tagsParam) + '</li>';
+            console.log('tagLinkHTML:', tagLinkHTML);
+          }
+
+          /* [NEW] END LOOP: for each tag in allTags: */
+
+          /*[NEW] add HTML from allTagsHTML to tagList */
+          tagList.innerHTML = allTagsHTML;
+ 
+        }
+
       }
-      /* END LOOP: for every article: */
-
     }
 
+    function calculateTagsParams(allTags) {
+
+      const params = {
+        min: 0,
+        max: 99999
+      };
+
+      for(let tag in allTags){
+        console.log(tag + ' is used ' + allTags[tag] + ' times');
+    
+  
+        if(allTags[tag] > params.max){
+          params.max = allTags[tag];
+        } else if (tags[tag] < params.min) {
+          params.min = allTags[tag];
+
+          return params;
+        }
+
+      }
+    }
+    generateTags();
   }
 
-  generateTags();
+
+
 
   function tagClickHandler(event) {
   /* prevent default action for this event */
@@ -327,3 +391,13 @@
   addClickListenersToAuthors();
 
 }
+
+
+
+
+
+
+
+
+
+
