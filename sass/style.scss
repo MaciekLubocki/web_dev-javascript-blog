@@ -22,7 +22,6 @@ sans-serif;
 body {
     background: $color-light;
     font-family: $font-text;
-    color: $color-dark;
     font-weight: 300;
     font-size: 16px;
     line-height: 1.7;
@@ -181,6 +180,23 @@ list a:active {
         margin: 0 10px 0 0;
     }
 }
+
+
+
+
+
+.tag-size-5 {
+font-size: 10px;
+color: rgb(0, 31, 209) !important;
+}
+
+.tag-size-1 {
+    font-size: 1rem;
+    color: red !important;
+    }
+    
+
+
 
 @media (max-width: 600px) {
     .wrapper {

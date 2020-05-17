@@ -8,7 +8,7 @@
     optArticleAuthorsSelector = '.post-author',
     optTagsListSelector = '.tags.list',
     optCloudClassCount = 5,
-    optCloudClassPrefix = "tag-size-";
+    optCloudClassPrefix = 'tag-size-';
 
 
   const titleClickHandler = function (event) {
@@ -91,117 +91,119 @@
 
   generateTitleLinks();
 
+
+
+
   function calculateTagsParams(tags) {
-    function calculateTagClass(count, params) {
-      function generateTags() {
-        /* [NEW] create a new variable allTags with an empty array */
-        let allTags = {};
-
-        /* find all articles */
-        const articles = document.querySelectorAll(optArticleSelector);
-        console.log('All Articles TAG: ', articles);
-
-        /* START LOOP: for every article: */
-        for (let article of articles) {
-          console.log(' Article TAG ELement is: ', article);
-
-          /* find tags wrapper */
-          /* make html variable with empty string */
-
-          const titleListEnterX = article.querySelector(optArticleTagsSelector);
-          titleListEnterX.innerHTML = '';
-          let html = '';
-
-          // optArticleTagsSelector
-          /* get tags from data-tags attribute */
-          const articleTag = article.getAttribute('data-tags');
-          console.log('to jest article TAG selector data-tags', articleTag);
-
-          /* split tags into array */
-          const articleTagsArray = articleTag.split(' ');
-
-          /* for each tag */
-          /* START LOOP: for each tag */
-          for (let tag of articleTagsArray) {
-            console.log('TO JEST TAG', tag);
-
-            /* create HTML of the link */
-            /* add generated code to html variable */
-            const linkTag = '<li><a href="#tag-' +  tag + '">' + tag + '</a></li>';
-            console.log('to jest linkTag: ', linkTag);
-            console.log('to jest tag: ', tag);
-
-            /* [NEW] check if this link is NOT already in allTags */
-            if(!allTags[tag]) {
-              /* [NEW] add tag to allTags object */
-              allTags[tag] = 1;
-            } else {
-              allTags[tag]++;
-            }
-
-            /* insert HTML of all the links into the tags wrapper */
-            // titleListEnter.insertAdjacentHTML("afterend", linkHTML);
-            html = html + linkTag;
-
-            console.log('to jest html: ', html);
-
-            console.log('to jest article do TAG: ', titleListEnterX);
-            titleListEnterX.innerHTML = html;
-            console.log('tutaj mam titlelistenxterX', titleListEnterX);
-          }
-          /* END LOOP: for every article: */
-
-
-          /* [NEW] find list of tags in right column */
-          const tagList = document.querySelector('.tags');
-          /* [NEW] create variable for all links HTML code */
-          const tagsParams = calculateTagsParams(allTags);
-          console.log('tagsParams:', tagsParams);
-          let allTagsHTML = '';
-
-          /* [NEW] START LOOP: for each tag in allTags: */
-          for(let tag in allTags){
-            /* [NEW] generate code of a link and add it to allTagsHTML */
-        
-            allTagsHTML += tagLinkHTML;
-        
-            const tagLinkHTML = '<li>' + calculateTagClass(allTags[tag], tagsParam) + '</li>';
-            console.log('tagLinkHTML:', tagLinkHTML);
-          }
-
-          /* [NEW] END LOOP: for each tag in allTags: */
-
-          /*[NEW] add HTML from allTagsHTML to tagList */
-          tagList.innerHTML = allTagsHTML;
- 
-        }
-
-      }
+    const params = { max: 0 , min: 999999 };
+    for(let tag in tags){
+      params.max = Math.max(tags[tag], params.max);
+      params.min = Math.min(tags[tag], params.min);
+      console.log(tag + ' is used ' + tags[tag] + ' times');
     }
-
-    function calculateTagsParams(allTags) {
-
-      const params = {
-        min: 0,
-        max: 99999
-      };
-
-      for(let tag in allTags){
-        console.log(tag + ' is used ' + allTags[tag] + ' times');
-    
-  
-        if(allTags[tag] > params.max){
-          params.max = allTags[tag];
-        } else if (tags[tag] < params.min) {
-          params.min = allTags[tag];
-
-          return params;
-        }
-
-      }
-    }
-    generateTags();
+    return params;
   }
+  
+  
+  
+  
+  function calculateTagClass(count, params) {
+    const normalizedCount = count - params.min;
+    console.log(normalizedCount);
+    const normalizedMax = params.max - params.min;
+    console.log(normalizedMax);
+    const percentage = normalizedCount / normalizedMax;
+    console.log(percentage);
+    const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+    console.log(optCloudClassPrefix + classNumber);
+    return optCloudClassPrefix + classNumber;
+  }
+
+  function generateTags() {
+    /* [NEW] create a new variable allTags with an empty array */
+    let allTags = {};
+
+    /* find all articles */
+    const articles = document.querySelectorAll(optArticleSelector);
+    console.log('All Articles TAG: ', articles);
+
+    /* START LOOP: for every article: */
+    for (let article of articles) {
+      console.log(' Article TAG ELement is: ', article);
+
+      /* find tags wrapper */
+      /* make html variable with empty string */
+
+      const titleListEnterX = article.querySelector(optArticleTagsSelector);
+      titleListEnterX.innerHTML = '';
+      let html = '';
+
+      // optArticleTagsSelector
+      /* get tags from data-tags attribute */
+      const articleTag = article.getAttribute('data-tags');
+      console.log('to jest article TAG selector data-tags', articleTag);
+
+      /* split tags into array */
+      const articleTagsArray = articleTag.split(' ');
+
+      /* for each tag */
+      /* START LOOP: for each tag */
+      for (let tag of articleTagsArray) {
+        console.log('TO JEST TAG', tag);
+
+        /* create HTML of the link */
+        /* add generated code to html variable */
+        const linkTag = '<li><a href="#tag-' +  tag + '">' + tag + '</a></li>';
+        console.log('to jest linkTag: ', linkTag);
+        console.log('to jest tag: ', tag);
+
+        html = html + linkTag;
+        /* [NEW] check if this link is NOT already in allTags */
+        if(!allTags[tag]) {
+          /* [NEW] add tag to allTags object */
+          allTags[tag] = 1;
+        } else {
+          allTags[tag]++;
+        }
+      }
+
+      /* insert HTML of all the links into the tags wrapper */
+      // titleListEnter.insertAdjacentHTML("afterend", linkHTML);
+       
+      titleListEnterX.innerHTML = html;
+    }
+    /* END LOOP: for every article: */
+    /* [NEW] find list of tags in right column */
+    const tagList = document.querySelector(optTagsListSelector);
+    /* [NEW] create variable for all links HTML code */
+    const tagsParams = calculateTagsParams(allTags);
+    console.log('tagsParams:', tagsParams);
+    let allTagsHTML = '';
+
+    /* [NEW] START LOOP: for each tag in allTags: */
+    for(let tag in allTags){
+      /* [NEW] generate code of a link and add it to allTagsHTML */
+        
+        
+        
+       
+      const tagLinkHTML = '<li><a href="#tag=' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"' + '>' + tag + '</a></li>';
+      allTagsHTML += tagLinkHTML;
+       
+      console.log('tagLinkHTML:', tagLinkHTML);
+    }
+
+    /* [NEW] END LOOP: for each tag in allTags: */
+
+    /*[NEW] add HTML from allTagsHTML to tagList */
+    tagList.innerHTML = allTagsHTML;
+ 
+  }
+
+     
+    
+  generateTags();
+  
 
 
 
@@ -391,13 +393,6 @@
   addClickListenersToAuthors();
 
 }
-
-
-
-
-
-
-
 
 
 
