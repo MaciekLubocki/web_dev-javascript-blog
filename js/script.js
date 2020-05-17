@@ -8,7 +8,8 @@
     optArticleAuthorsSelector = '.post-author',
     optTagsListSelector = '.tags.list',
     optCloudClassCount = 5,
-    optCloudClassPrefix = 'tag-size-';
+    optCloudClassPrefix = 'tag-size-',
+    optAuthorsListSelector = '.post-author';
 
 
   const titleClickHandler = function (event) {
@@ -265,59 +266,84 @@
   }
 
   addClickListenersToTags();
-
+  
+  
   function generateAuthors() {
-  /* find all articles */
-
+  
+    let allA = [];
+  
+  
+  
+    /* find all articles */
+  
     const articles = document.querySelectorAll(optArticleSelector);
     console.log('All Articles TAG: ', articles);
-
+  
     /* START LOOP: for every article: */
-
+  
     for (let article of articles) {
       console.log(' Article TAG ELement is: ', article);
-
+  
       /* find tags wrapper */
       /* make html variable with empty string */
-
+  
       const AuthorListEnter = article.querySelector(optArticleAuthorsSelector);
-
+  
       AuthorListEnter.innerHTML = '';
       let html = '';
-
+  
       // optArticleTagsSelector
-
+  
       /* get tags from data-tags attribute */
       const articleAuthor = article.getAttribute('data-author');
       console.log('to jest article TAG selector data-author', articleAuthor);
-
+  
       /* create HTML of the link */
       /* add generated code to html variable */
       const AuthorTag = '<li><a href="#tag-' + articleAuthor + '">' + articleAuthor + '</a></li>';
-       
+         
       console.log(AuthorTag);
       console.log('to jest tag: ', AuthorTag);
+  
+/* [NEW] check if this link is NOT already in allTags */
+      if(allA.indexOf(AuthorTag) == -1){
+        /* [NEW] add generated code to allTags array */
+        allA.push(AuthorTag);
+      }
+
+
+
+
 
       /* insert HTML of all the links into the tags wrapper */
       // titleListEnter.insertAdjacentHTML("afterend", linkHTML);
       html = html + AuthorTag;
-
+  
       console.log('to jest html: ', html);
-
+  
       console.log('to jest article do TAG: ');
       AuthorListEnter.innerHTML = html;
       console.log('tutaj mam titlelistenxterX', AuthorListEnter);
     }
-
+  
     /* END LOOP: for every article: */
-
+  
     // const links = document.querySelectorAll('.list-horizontal a');
+  
+    // for (let link of links) {
 
-  // for (let link of links) {
-  //     article.addEventListener('click', titleClickHandler);
-  // }
+    /* [NEW] find list of tags in right column */
+    const aList = document.querySelector('.authors');
+
+    /* [NEW] add html from allTags to tagList */
+    aList.innerHTML = allA.join(' ');
+
+
+    //     article.addEventListener('click', titleClickHandler);
+    // }
   }
-
+  
+  
   generateAuthors();
 
   function authorClickHandler(event) {
